@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>LRTP Needs Assessment Data Browser</title>
+
+ <!--  JS FILE HAS TO BE IN HERE for CSS tags relating to "simple-sliding-doors" to work  
+<script type="text/javascript">document.documentElement.className += " js";</script>   -->
+<link rel="stylesheet" type="text/css" href="simple-sliding-doors/simple-sliding-doors.css"  />     <!--  STILL NEED THIS AND STYLE FILES BELOW   MMCS, June 2014  -->
+
+
+<link rel="stylesheet" href="simple-sliding-doors/tabs.css" type="text/css"> 
+<!--<link rel="stylesheet" href="../tabs_comparison/styles.css" type="text/css">          -->
+<link rel="stylesheet" type="text/css" href="plan_master.css" />
+
+<script src="../../libs/jquery/jquery-1.7.1/jquery-1.7.1.js"></script>
+<script src="../../libs/openlayers/OpenLayers-2.13.1/OpenLayers.js"></script>
+<script src="plan_master.js" type="text/javascript"></script>
+
+<!-- *** JavaScript for Accessible Grids *** -->
+<script src="accessibleGridMPM.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-39489988-1']);
+  _gaq.push(['_setDomainName', 'marymcs.org']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+
+<!-- *** Primary data store for selections ***  --> 
+<!--  <script src="PLAN.js" type="text/javascript"></script>   -->
+<script src="PLAN.js" type="text/javascript"></script>
+
+
+</head>
+
+<body onload="marymcs.demoApp.init()">
+
+<img src="images/header_bar01.png" width="100%" height="25">
+<h1 id="top_heading">Long Range Transportation Plan -- Needs Assessment -- Boston Metropolitan Region</h1>
+
+<div id="notseen01" class="offscreen">On initial load links which display map layers and tables, all of which are Level 3 headings, are closed and need to be opened.  Click on desired link, <br />insert choice as required, and tab to 'GET DATA' button to display desired data table.  then use table commands to read.
+</div>
+
+<span class="start_bank">   
+     <input type="button" id="About"  value="About" alt="information about the M P O and the Long Range Transportation Plan"> 
+     <input type="button" id="Help" value="Help" alt="detailed explanation of selected data items">
+     <input type="button" id="Comment"  value="Submit a Comment" alt="links to comment page"> 
+</span>
+
+<a name="top"></a>
+
+<div id="inputbox">
+    <h2>MAP DISPLAY CHOICES:</h2>
+    <!--  populate the combo box to allow choosing region of interest  -->  
+            <span class='midfont'>Select region of interest: </span>                                                                                                          
+                <span class='subregion_select'>
+                    <select id="selected_region" name="Select a subregion" >   
+                        <option value="Region">Select regional corridor(or whole region):</option>
+                        <option value="N">North</option>
+                        <option value="NE">Northeast</option>
+                        <option value="NW">Northwest</option>
+                        <option value="W">West</option>
+                        <option value="SW">Southwest</option>
+                        <option value="SE">Southeast</option>
+                        <option value="Core">Central Area</option>
+                        <option value="Region">Boston MPO</option>
+                    </select> 
+                </span><br /><br />
+            
+             
+    <div id="data_categories_select">                                                                            <!--  needed so that tables display AFTER data categories selection section   -->
+        <span class='midfont'>Select data category(ies) of interest (<em><small>toggle category name to close</small></em>):</span>        
+        <input type="button" id='all_clear_map' value="Clear All Map Layers" /><br />
+        
+                                                                            
+            <h3><a href="#" id="main_socioeconomic" onclick="unhide('socioeconomic')" title="link opens up choices for socioeconomic data display on map">Socioeconomic Data Map Layers</a></h3> 
+                <ul>
+                <fieldset id='socioeconomic' class='hidden'>                                                <!--     START OF SOCIOECONOMIC FIELDSET     -->
+                <legend><span class='fieldset_heading'>Socioeconomic Data -- select ONLY ONE layer to display</span></legend> 
+                   
+                        <li> 
+                            <a href="#" id="population_choices" title="link opens up choices for population display on map">Population Density</a>
+                            <p>                     
+                                <span id="population_buttons" class='oneline'>
+                                    <input type="radio" name="my_choice" id="2010pop" value="2010pop" /><label for="2010pop">2012 Base Year </label>			
+                                    <input type="radio" name="my_choice" id="2040pop" value="2040pop" /><label for="2040pop">2040 Future Year </label>
+                                    <input type="radio" name="my_choice" id="changePop" value="changePop" /><label for="changePop">Change 2012-2040 </label><br />
+                                    <input type="radio" name="my_choice" id="catchment" value="catchment" /><label for="catchment">Areas Beyond Transit Range</label><span class="help_line">(click HELP button for more info)</span> 
+                                </span>         
+                            </p>          
+                         </li><br /> 
+                        <li> 
+                            <a href="#" id="household_choices" title="link opens up choices for household data display on map">Households</a>
+                            <p>                     
+                                <span id="household_buttons" class='oneline'>
+                                    <input type="radio" name="my_choice" id="2010HH" /><label for="2010HH">2012 Base Year </label>			
+                                    <input type="radio" name="my_choice" id="2040HH" /><label for="2040HH">2040 Future Year </label>
+                                    <input type="radio" name="my_choice" id="changeHH" /><label for="changeHH">Change 2012-2040 </label><br />                                   
+                                </span>         
+                            </p>          
+                         </li><br /> 
+                         <li>           
+                            <a href="#" id="employment_choices" title="link opens up choices for employment display on map">Employment Density</a>
+                            <p>
+                                 <span id="employment_buttons" class='oneline'>
+                                    <input type="radio" name="my_choice" id="2010emp"  /><label for="2010emp">2012 Base Year </label>		
+                                    <input type="radio" name="my_choice" id="2040emp"  /><label for="2040emp">2040 Future Year </label>
+                                    <input type="radio" name="my_choice" id="changeEmp"  /><label for="changeEmp">Change 2012-2040 </label>
+                                </span>
+                            </p>                          
+                         </li><br />                     
+                         <li>           
+                            <a href="#" id="elderly_choices" title="link opens up choices for display of elderly population on map">Elderly Population 2010 (from Census)</a>
+                            <p> 
+                                <span class='oneline'>
+                                    <input type="radio" name="my_choice" id="eldPop"  /><label for="eldPop">Population Age 70+ </label>		
+                                    <input type="radio" name="my_choice" id="eldPct"  /><label for="eldPct">Percent Population Age 70+ </label>                  
+                                </span>
+                            </p>                  
+                         </li><br />                       
+                         <li>           
+                            <a href="#" id="EJ_choices" title="link opens up choices for display of EJ areas on map">Environmental Justice Areas</a>
+                            <p> 
+                                <span class='oneline'>
+                                    <input type="radio" name="my_choice" id="EJTitleVI"  /><label for="EJTitleVI">Title VI Areas </label>		
+                                    <input type="radio" name="my_choice" id="EJConcern"  /><label for="EJConcern">Areas of EJ Concern</label> <br />                                    
+                                </span>
+                                <span class="help_line">(click HELP button for more info)</span>
+                            </p>                  
+                         </li><br />                                                
+                         <span class="button_bank">
+                             <input type="button" id="SE_clear" class="map_button" value="Clear Data" alt="clears socioeconomic data displayed on map"><br />                 
+                         </span>                   
+                </fieldset>                                                                                     <!--    END OF SOCIOECONOMIC DATA FIELDSET      -->                                                                                                     
+                </ul>                                                                                            
+  
+
+            <h3><a href="#" id= "main_transportation" onclick="unhide('transportation')" title="link opens up choices for transportation data display on map">Transportation Data Map Layers</a></h3> 
+                <ul>
+                <fieldset id='transportation' class='hidden'>                                                   <!--    START OF TRANSPORTATION DATA FIELDSET   -->
+                <legend><span class='fieldset_heading'>Transportation Data -- select ONLY ONE layer to display</span></legend>
+                    
+                        <li> 
+                            <a href="#" id="highway_choices" title="link opens up choices for highway data display on map">Transportation Facilities - Highway</a>
+                            <p>                     
+                                <span class='oneline'>
+                                    <input type="radio" name="t_choice" id="highway" /><label for="highway">Major roadways <span class="zoom_line">(zoom in for more detail/labels)</span></label><br />                                                               
+                                    <input type="radio" name="t_choice" id="pavement" /><label for="pavement">Pavement condition <span class="help_line">(click HELP button for more info)</span></label> 
+                                </span>         
+                            </p>
+                        </li><br />                         
+                        <li> 
+                            <a href="#" id="transit_choices" title="link opens up choices for rail transit data display on map">Transportation Facilities - Rail Transit</a>
+                            <p>                     
+                                <span class='oneline'>
+                                    <input type="radio" name="t_choice" id="RT" /><label for="RT">MBTA Rapid Transit </label>			
+                                    <input type="radio" name="t_choice" id="CR" /><label for="CR">MBTA Commuter Rail </label><br />                                   
+                                </span>         
+                            </p>
+                        </li><br />                         
+                        <li> 
+                            <a href="#" id="transit_choices" title="link opens up choices for other transit facilities display on map">Transportation Facilities - Other Transit</a>
+                            <p>                     
+                                <span class='oneline'>                                    
+                                    <input type="radio" name="t_choice" id="airports_etc" /><label for="airports_etc">Airports/MassDOT Park-Ride Lots/Docks</label><br />
+                                    <input type="radio" name="t_choice" id="bikes" /><label for="bikes">Dedicated Bicycle Paths </label>&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="t_choice" id="ferries" /><label for="ferries">Commuter Ferries </label><br />
+                                  
+                                <!--  unhide combo box to allow a single bus route to be chosen for display   -->
+                                    <input type="radio" name="t_choice" id="buses" /><label for="buses">MBTA Bus Routes: Select a bus route of interest-- </label><br />                                
+                                            <form name="drop_list" id="drop_list" action="" method="POST">
+                                                <select id="route_name" onChange="marymcs.demoApp.searchForRoute()">                                                
+                                                    <option value="">Select one bus route:</option>
+                                                </select>                                                                                        
+                                            </form>                                                                    
+                                </span>         
+                            </p>
+                        </li><br />                                                
+                        <li>
+                             <a href="#" id="freight_choices" title="link opens up choices for truck data display on map">Freight (Truck) Trip Density and Generators</a>
+                             <p>
+                                 <span class='oneline'>                                  
+                                    <input type="radio" name="t_choice" id="2030truckgen" /><label for="2030truckgen">2012 Base Year With Selected Truck Trip Generators  </label><br />
+                                    <input type="radio" name="t_choice" id="2040trucks" /><label for="2040trucks">2040 Future Year</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="t_choice" id="change_trucks" /><label for="change_trucks">Change Truck Trip Density 2012-2040</label><br />                        
+                                    <input type="radio" name="t_choice" id="rail_freight" /><label for="rail_freight">Rail Freight Lines</label>
+                                 </span>
+                             </p>
+                         </li><br />                                                
+                         <li>
+                            <a href="#" id="VOC_data" title="link opens up choices for display of highway volume to capacity data on map">Volume/Capacity Ratio - 2012 and 2040</a>                           
+                            <p>                                 
+                                <span class='oneline'>
+                                    <input type="radio" name="t_choice" id="VOC2012_AM_E" /><label for="VOC2012_AM_E">2012 AM - Expressways</label>&nbsp;&nbsp;			
+                                    <input type="radio" name="t_choice" id="VOC2012_AM_A" /><label for="VOC2012_AM_A">2012 AM - Arterials</label><br />
+                                    <input type="radio" name="t_choice" id="VOC2012_PM_E" /><label for="VOC2012_PM_E">2012 PM - Expressways</label>&nbsp;&nbsp;			
+                                    <input type="radio" name="t_choice" id="VOC2012_PM_A" /><label for="VOC2012_PM_A">2012 PM - Arterials</label><br />
+                                    <input type="radio" name="t_choice" id="VOC2040_AM_E" /><label for="VOC2040_AM_E">2040 AM - Expressways</label>&nbsp;&nbsp;			
+                                    <input type="radio" name="t_choice" id="VOC2040_AM_A" /><label for="VOC2040_AM_A">2040 AM - Arterials</label><br />
+                                    <input type="radio" name="t_choice" id="VOC2040_PM_E" /><label for="VOC2040_PM_E">2040 PM - Expressways</label>&nbsp;&nbsp;			
+                                    <input type="radio" name="t_choice" id="VOC2040_PM_A" /><label for="VOC2040_PM_A">2040 PM - Arterials</label>       
+                                </span><br /> 
+                                <span class="help_line">(click HELP button for more info)</span>
+                            </p>
+          <!--                  <p><small><I>(NOTE: Built on model links,</i> not roadway inventory)</small></p>         -->
+                         </li><br />                        
+                         <li>
+                            <a href="#" id="intersections" title="link opens up choices for crash data display on map">Crash "Clusters" (<span class="hilit">updated</span> to Year 2013)</a>
+                            <p>                     
+                                <span class='oneline'>                                  		
+                                    <input type="radio" name="t_choice" id="crashes" /><label for="crashes">Crashes </label><span class="help_line"></span>&nbsp;&nbsp;	
+                                    <input type="radio" name="t_choice" id="bike_crashes" /><label for="bike_crashes">Bicycle Crashes </label><span class="help_line"></span>&nbsp;&nbsp;	
+                                    <input type="radio" name="t_choice" id="ped_crashes" /><label for="ped_crashes">Pedestrian Crashes </label><span class="help_line"><br />(Note: points at large scale, polygon "clusters" when zoomed in; <br />click HELP button for more info)</span>
+                                </span>         
+                            </p>
+                         </li>
+                          <span class="button_bank">
+                              <input type="button" id="TR_clear" class="map_button" value="Clear Data" alt="clears transportation data displayed on map"><br />                  
+                          </span>                   
+                </fieldset>                                                                                                     <!--        END OF TRANSPORTATION DATA FIELDSET  -->                                                                                
+                </ul>                                                                                                         
+                  
+            <h3><a href="#" id="main_OD" title="link opens separate page with origin-destination info">Origin-Destination Flows Between Regions<span class='midfont'>&nbsp;&nbsp;&nbsp;&nbsp;(Opens in new window)</span></a></h3>
+            
+            <h3><a href="#" id="second_OD" title="link opens separate page with corridor trips to Boston & central area">Trips from Regions to Boston and Central Area<span class='midfont'>&nbsp;&nbsp;&nbsp;&nbsp;(Opens in new window)</span></a></h3><br />
+                
+               
+                 
+    <h2>DATA TABLE CHOICES:</h2> 
+         <span class='midfont'>Select table data category(ies) of interest (<em><small>toggle category name to close):</small></em></span>
+ <!--        (After table opens, click on map to identify individual TAZs in table, <br />or on table row to identify TAZ on map.)</em></span>   -->
+          <input type='button' id='all_clear_tables' value='Clear Data Tables' /><br />  
+   
+            <h3><a href="#" id="table_socioeconomic" class="tables" onclick="unhide('socioeconomic_table')">Socioeconomic Data Table - by Town</a></h3>                 
+                <fieldset id='socioeconomic_table' class='hidden'>                                                              <!--        START OF SOCIOECONOMIC TABLE FIELDSET     -->
+                    <legend><span class='fieldset_heading'>Socioeconomic Data Table</span></legend>                      
+                        <span class='midfont'><label for="townName">Select one or more towns:</label><span class="town_box"><input id="townName" type="text" /></span></span><br />  
+                        <span class="table_directions">Enter a town name in the box above, then click FIND TOWN button below. More towns can be added to selection, one by one, before clicking GET DATA button. Returned data will be for all towns and/or TAZs within selected town(s). Clicking DOWNLOAD DATA button will download the table in the Tab currently displayed to a CSV file.<br /> 
+                            <em>(After table opens, click on table row to identify individual TAZs on map.)</em></span>
+                        <div id='table_buttons'>
+                            <input type="button"  id="searchForTown" value="Find town" alt="Adds entered town to list for which data will be pulled"/>
+                            <input type="button"  id="getSETable" value="Get SE data" alt="Opens socioeconomic data table for selected town"  />                         
+                            <span class="spanForButtonWithLink">
+                                    <input type="button" id="downloadSEData" value="Download data" alt="Downloads table for selected towns to comma-separated or Excel file" />
+                                    <a id="downloadAnchorTag1" href=""></a>
+                            </span>	 
+                            <input type="button"  id="clearSETable" value="Clear table" /><br />
+                        </div>
+                </fieldset>                                                                                                     <!--      END OF SOCIOECONOMIC TABLE FIELDSET      -->                                                                                  
+                                                                                                                          
+                                                
+     <h3><a href="#" id= "table_transportation" onclick="unhide('transportation_table')">Transportation Data Table - by Corridor</a></h3> 
+                     
+                        <fieldset id='transportation_table' class='hidden'>                                     <!--         START OF TRANSPORTATION TABLE FIELDSET -->                           
+                            <legend><span class='fieldset_heading'>Transportation Data Table -- Corridor</span></legend>             
+
+                                 <!--  populate the combo box to allow choosing subregion  -->
+                                <span class='oneline'>                                                          <!--        START SPAN 'oneline'       -->
+                                    <span class='midfont'>Select subregion: </span>                         
+                                    <span class='subregion_select'>
+                                        <select id="table_subregion" title="Select a tabsubregion" onchange="marymcs.demoApp.identifyTRCorridor()" >  
+                                            <option value="">Select data table area:</option>
+                                            <option value="N">North</option>
+                                            <option value="NE">Northeast</option>
+                                            <option value="NW">Northwest</option>
+                                            <option value="W">West</option>
+                                            <option value="SW">Southwest</option>
+                                            <option value="SE">Southeast</option>
+                                            <option value="Core">Central Area</option>                                            
+                                        </select>                         
+                                    </span>
+                                </span>                                                                          <!--        END SPAN 'oneline'  -->                                                      
+                            
+                                <br /><br /> 
+                                 <span class="table_directions">Available tables include: crashes with EPDO (Equivalent Property Damage Only) index, roadway segments with highest volume-capacity (VC) ratios, speed and travel time indices, commuter rail stations, and others. <br />(click HELP button for more info)</span>
+             
+                            <br />                  
+                            <div id='TR_buttons'>                      
+
+                                <input type="button"  id="getTableTR" class="hidden2" alt="Opens table with multiple tabs with transportation data for selected subregion" value="Get corridor data" onclick="marymcs.demoApp.displayTRCorridorData()" />     
+                                <span class="spanForButtonWithLink">
+                                        <input type="button" class="hidden2" id="downloadTRData" value="Download data" alt="Download transportation data table to comma-separated file or Excel"/>  <!--  onclick="marymcs.demoApp.getStuff()" />   -->
+                                        <a id="downloadAnchorTag2" href=""></a>
+                                </span>		    
+                    
+                                <input type="button"  id="clearTRTable" value="Clear table" class="hidden2" />  <br />  <!-- onclick="marymcs.demoApp.clearTable()" /><br />   -->
+                            </div>
+                                           
+                        </fieldset>                                                                          <!--        END OF TRANSPORTATION table DATA FIELDSET      -->
+                        
+                        
+    
+    
+                        
+            <h3><a href="#" id= "table_transportation_all" class="tables" onclick="unhide('transportation_table_all')">Transportation Data Table - Regionwide</a></h3>             
+                <fieldset id='transportation_table_all' class='hidden'>                                                     <!--         START OF TRANSPORTATION TABLE-REGIONWIDE FIELDSET -->    
+                    <legend><span class='fieldset_heading'>Transportation Data Table Regionwide</span></legend>
+                        <span class="table_directions">Available tables include airports, MassDOT park-ride lots, boat docks and multi-use recreational paths within the Boston region.</span><br />
+                             <div id='TR_regionwide_buttons'>                 
+                                <input type="button" id="fetchRegionwideTable" value="Get regionwide data" alt="Get single table with multiple tabs for regionwide data" />                        
+                                <span class="spanForButtonWithLink">
+                                        <input type="button" id="downloadTRRegionwideData" value="Download data" />
+                                        <a id="downloadAnchorTag3" href=""></a>
+                                </span>	
+                                <input type="button"  id="clearTRRegionTable" value="Clear table" /><br /><br />
+                             </div>                    
+                </fieldset>                                                                                                 <!--       END OF TRANSPORTATION TABLE-REGIONWIDE FIELDSET      -->
+                        
+             
+            <h3><a href="#" id="table_environmental" onclick="unhide('MassGIS_message')">Environmental Data</a></h3>                
+                <span id="MassGIS_message" class="hidden">             
+                     All environmental data from MassGIS.  See <a href="http://www.mass.gov/anf/research-and-tech/it-serv-and-support/application-serv/office-of-geographic-information-massgis/datalayers/layerlist.html" target="_blank">MassGIS website</a> for current versions.<br /><br />
+                </span><br /><br />                                         
+                
+    </div>                                                                                                                  <!--        END OF DATA_CATEGORIES_SELECT            -->
+        
+        
+        
+   <div id="mytabs" class="tabs hidden">                                                                                    <!--        START OF SOCIOECONOMIC DATA TABLES DIVS    -->
+        <h2 id="population_grid">Population</h2>
+			<div class="tabbody">		
+					<div id="pop_grid"></div>	
+			</div> 
+        <h2 id="household_grid">Households</h2>
+			<div class="tabbody">		
+					<div id="hh_grid"></div>	
+			</div>     
+        <h2 id="employment_grid">Employment</h2>
+			<div class="tabbody">		
+					<div id="emp_grid"></div>	
+			</div>            
+        <h2 id="elderly_grid">Elderly</h2>
+			<div class="tabbody">	
+					<div id="eld_grid"></div>	
+			</div>             
+     </div> 
+
+                                                                                                                            <!--        START OF TRANSPORTATION-CORRIDOR TABLES DIVS -->
+    
+     <div id="mytabs2" class="tabs hidden">                                                   
+        <h2 id="TR01_grid">Top 5% Crashes</h2>
+			<div class="tabbody">
+					<div id="crash_grid"></div>
+			</div> 
+        <h2 id="TR02_grid">VC Ratio</h2>
+			<div class="tabbody">	
+					<div id="VOC_grid"></div>	
+			</div>                     
+        <h2 id="TR04_grid">Speed Index</h2>
+			<div class="tabbody">
+					<div id="spd_idx_grid"></div>
+			</div>
+         <h2 id="TR05_grid">Travel Time Index</h2>
+			<div class="tabbody">
+					<div id="tt_grid"></div>
+			</div>            
+        <h2 id="TR03_grid">Rail Stations</h2>
+            <div class="tabbody">       
+					<div id="CRStn_grid"></div>
+            </div>
+      </div>
+      
+         
+    <div id="mytabs3" class="tabs hidden">                                                                                  <!--        START OF TRANSPORTATION-REGIONWIDE TABLES DIVS -->                                                            
+        <h2 id="TRR01_grid">Airports</h2>
+			<div class="tabbody">	
+					<div id="airport_grid"></div>
+            </div>	
+         <h2 id="TRR02_grid">Park-Ride Lots</h2>
+			<div class="tabbody">			
+					<div id="PRlots_grid"></div>			
+			</div>            
+         <h2 id="TRR03_grid">Boat Docks</h2>
+			<div class="tabbody">				
+					<div id="boatdocks_grid"></div>				
+			</div>            
+         <h2 id="TRR04_grid">Bike Paths</h2>
+			<div class="tabbody">				
+					<div id="bikes_grid"></div>			
+			</div>
+     </div>        
+                                                                                                                            <!--       END OF DATA TABLES DIVS    -->        
+     <div id="download-window" class="x-hidden"></div>        
+           			
+</div>		                                                                                                                <!--       END OF INPUT BOX    -->
+
+<br />
+
+<div id="map"></div>
+
+<div id="map_legend">
+    <span id="legend_div1"></span><span id="legend_div2"></span><span id="legend_div3"></span>
+</div>       
+
+</body>
+</html>
