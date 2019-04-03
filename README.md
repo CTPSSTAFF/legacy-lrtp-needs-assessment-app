@@ -1,7 +1,7 @@
 # legacy-lrtp-needs-assessment-app
 Legacy Needs Assessment application for 2035 Long Range Transportation Plan
 
-This app was written by Mary McShane, circa 2012-2013. It consists of three distinct applications, bundled together in the same folder, that are collectively called the "LRTP app. These are:
+This app was written by Mary McShane, circa 2012-2013. It consists of three distinct applications, bundled together in the same folder, that are collectively called the "LRTP app". These are:
 * main LRTP needs assessment data browser
 * visualization of origins and destinations (O/D) of trips in the model area, by mode
 * visualization of modeled trips into the Boston central area, by mode
